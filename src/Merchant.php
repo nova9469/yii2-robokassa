@@ -178,6 +178,7 @@ class Merchant extends BaseObject
 <input type=hidden name=OutSum value="{$paymentOptions['OutSum']}">
 <input type=hidden name=InvId value="{$paymentOptions['InvId']}">
 <input type=hidden name=Description value="{$paymentOptions['Description']}">
+<input type=hidden name=Encoding value="{$paymentOptions['Encoding']}">
 <input type=hidden name=SignatureValue value="{$paymentOptions['SignatureValue']}">
 
 HTML;

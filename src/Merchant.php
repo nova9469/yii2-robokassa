@@ -161,4 +161,37 @@ class Merchant extends BaseObject
             'message' => $message,
             'signature' => $signature])->send();
     }
+
+    public function getForm(PaymentOptions $options)
+    {
+        $paymentOptions = PaymentOptions::paymentParams($this, $options);
+        $html  = <<<HTML
+<form action='https://auth.robokassa.ru/Merchant/Index.aspx' method=POST>
+<input type=hidden name=MerchantLogin value="{$paymentOptions['MrchLogin']}">
+<input type=hidden name=OutSum value="{$paymentOptions['OutSum']}">
+<input type=hidden name=InvId value="{$paymentOptions['InvId']}">
+<input type=hidden name=Description value="{$paymentOptions['Description']}">
+<input type=hidden name=SignatureValue value="{$paymentOptions['SignatureValue']}">
+
+HTML;
+        foreach ($paymentOptions as $key => $value ){
+            if(strstr($key, 'shp_')){
+                $name = ucfirst($key);
+                $html .= <<<HTML
+<input type=hidden name=$name value="$value">
+HTML;
+            }
+        }
+        $html .= <<<HTML
+<input type=hidden name=IncCurrLabel value="{$paymentOptions['IncCurrLabel']}">
+<input type=hidden name=Culture value="{$paymentOptions['Culture']}">
+<input type=hidden name=Email value="{$paymentOptions['Email']}">
+<input type=hidden name=ExpirationDate value="{$paymentOptions['ExpirationDate']}">
+<input type=hidden name=Receipt value="{$paymentOptions['Receipt']}">
+<input type=hidden name=IsTest value="{$paymentOptions['IsTest']}">
+<input type=submit value='Оплатить'>
+</form>
+HTML;
+        return $html;
+    }
 }

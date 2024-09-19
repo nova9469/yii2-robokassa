@@ -195,7 +195,7 @@ HTML;
 <input type=hidden name=Culture value="{$paymentOptions['Culture']}">
 <input type=hidden name=Email value="{$paymentOptions['Email']}">
 <input type=hidden name=ExpirationDate value="{$paymentOptions['ExpirationDate']}">
-<input type=hidden name=Receipt value="{$paymentOptions['Receipt']}">
+<input type=hidden name=Receipt value='{$paymentOptions['Receipt']}'>
 <input type=hidden name=IsTest value="{$paymentOptions['IsTest']}">
 <input type=submit value='Оплатить'>
 </form>

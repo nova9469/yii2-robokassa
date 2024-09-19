@@ -29,6 +29,7 @@ class Merchant extends BaseObject
 
     public $hashAlgo = 'md5';
 
+
     /**
      * @param PaymentOptions|array $options
      * @return \yii\console\Response|Response
@@ -162,6 +163,12 @@ class Merchant extends BaseObject
             'signature' => $signature])->send();
     }
 
+    /**
+     * Get form html string
+     * @param PaymentOptions|array $options
+     * @return string
+     * @throws InvalidConfigException
+     */
     public function getForm(PaymentOptions $options)
     {
         $paymentOptions = PaymentOptions::paymentParams($this, $options);

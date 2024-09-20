@@ -101,6 +101,7 @@ class Merchant extends BaseObject
 
         if (($receipt = $options->getJsonReciept()) !== null) {
             // MerchantLogin:OutSum:InvId:OutSumCurrency:UserIp:Receipt:Пароль#1
+            $receipt = urlencode($receipt);
             $signature .= ":{$receipt}";
         }
 

@@ -199,6 +199,7 @@ HTML;
 HTML;
             }
         }
+        $paymentOptions['Receipt'] = urlencode($paymentOptions['Receipt']);
         $html .= <<<HTML
 <input type=hidden name=IncCurrLabel value="{$paymentOptions['IncCurrLabel']}">
 <input type=hidden name=Culture value="{$paymentOptions['Culture']}">

@@ -108,7 +108,7 @@ class Merchant extends BaseObject
         if (!empty($shp)) {
             $signature .= ':' . $this->buildShp($shp);
         }
-        echo $signature.chr(13).chr(10);
+
         return strtolower($this->encryptSignature($signature));
     }
 
@@ -172,6 +172,9 @@ class Merchant extends BaseObject
     public function getForm(PaymentOptions $options)
     {
         $paymentOptions = PaymentOptions::paymentParams($this, $options);
+
+        echo $paymentOptions['Receipt'].chr(13).chr(10);
+
         $html  = <<<HTML
 <form action='https://auth.robokassa.ru/Merchant/Index.aspx' method=POST>
 <input type=hidden name=MerchantLogin value="{$paymentOptions['MrchLogin']}">

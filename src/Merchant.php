@@ -197,11 +197,13 @@ HTML;
 HTML;
             }
         }
+
         if($paymentOptions['userIp'] && !empty($paymentOptions['userIP'])) {
             $html .= <<<HTML
 <input type=hidden name=UserIp value="{$paymentOptions['userIp']}">
 HTML;
         }
+
         $html .= <<<HTML
 <input type=hidden name=IncCurrLabel value="{$paymentOptions['IncCurrLabel']}">
 <input type=hidden name=Culture value="{$paymentOptions['Culture']}">

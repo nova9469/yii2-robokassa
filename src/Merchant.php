@@ -177,11 +177,9 @@ class Merchant extends BaseObject
     public function getForm(PaymentOptions $options)
     {
         $paymentOptions = PaymentOptions::paymentParams($this, $options);
-
-//        echo $paymentOptions['Receipt'].chr(13).chr(10);
+        $paymentOptions['Receipt'] = urlencode($paymentOptions['Receipt']);
 
         $html  = <<<HTML
-<span>{$this->tempSignature}</span>
 <form action='https://auth.robokassa.ru/Merchant/Index.aspx' method=POST>
 <input type=hidden name=MerchantLogin value="{$paymentOptions['MrchLogin']}">
 <input type=hidden name=OutSum value="{$paymentOptions['OutSum']}">
@@ -199,7 +197,6 @@ HTML;
 HTML;
             }
         }
-        $paymentOptions['Receipt'] = urlencode($paymentOptions['Receipt']);
         $html .= <<<HTML
 <input type=hidden name=IncCurrLabel value="{$paymentOptions['IncCurrLabel']}">
 <input type=hidden name=Culture value="{$paymentOptions['Culture']}">

@@ -108,7 +108,7 @@ class Merchant extends BaseObject
         if (!empty($shp)) {
             $signature .= ':' . $this->buildShp($shp);
         }
-
+        echo $signature.chr(13).chr(10);
         return strtolower($this->encryptSignature($signature));
     }
 

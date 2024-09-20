@@ -45,6 +45,16 @@ composer require yii-cms/yii2-robokassa:dev-master*
 
 ```php
 /**
+ * Генерирует html форму для передачи парметров робокассе методо POST.
+ * 
+ * @param \robokassa\PaymentOptions $options
+ * @return \yii\web\Response
+ */
+\robokassa\Merchant::getForm($options);
+```
+
+```php
+/**
  * Получение ссылки на оплату с заданными параметрами.
  * 
  * @param \robokassa\PaymentOptions $options
@@ -263,6 +273,47 @@ class PaymentController extends \yii\web\Controller
             'merchant' => Yii::$app->get('merchant'),
             'model' => $model,
         ]);
+    }
+    
+    
+    public function actionInvoiceForm()
+    {
+        $model = new Invoice();
+        $model->status = Invoice::STATUS_PENDING;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            /** @var \robokassa\Merchant $merchant */
+            $merchant = Yii::$app->get('merchant');
+            return $merchant->getForm(new PaymentOptions([
+                    'outSum' => $model->sum,
+                    'invId' => $model->id,
+                    'description' => 'Description',
+                    'culture' => 'en',
+                    'receipt' => [
+                        'sno' => 'osn',
+                        'items' => [
+                            [
+                                'name' => 'Название товара 1',
+                                'quantity' => 1,
+                                'sum' => 100,
+                                'payment_method' => 'full_payment',
+                                'payment_object' => 'commodity',
+                                'tax' => 'vat10'
+                            ],
+                            [
+                                'name' => 'Название товара 2',
+                                'quantity' => 3,
+                                'sum' => 450,
+                                'payment_method' => 'full_prepayment',
+                                'payment_object' => 'excise',
+                                'tax' => 'vat120',
+                                'nomenclature_code' => '04620034587217'
+                            ],
+                        ],
+                    ],
+                ]));
+        }
+        return false;
     }
 }
 ```

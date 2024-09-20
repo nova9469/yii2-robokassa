@@ -198,9 +198,9 @@ HTML;
             }
         }
 
-        if($paymentOptions['userIp'] && !empty($paymentOptions['userIP'])) {
+        if($paymentOptions['userIP'] && !empty($paymentOptions['userIP'])) {
             $html .= <<<HTML
-<input type=hidden name=UserIp value="{$paymentOptions['userIp']}">
+<input type=hidden name=UserIp value="{$paymentOptions['userIP']}">
 HTML;
         }
 

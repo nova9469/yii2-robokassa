@@ -29,6 +29,8 @@ class Merchant extends BaseObject
 
     public $hashAlgo = 'md5';
 
+    public $tempSignature;
+
 
     /**
      * @param PaymentOptions|array $options
@@ -109,6 +111,8 @@ class Merchant extends BaseObject
             $signature .= ':' . $this->buildShp($shp);
         }
 
+        $this->tempSignature = $signature;
+
         return strtolower($this->encryptSignature($signature));
     }
 
@@ -176,6 +180,7 @@ class Merchant extends BaseObject
 //        echo $paymentOptions['Receipt'].chr(13).chr(10);
 
         $html  = <<<HTML
+<span>{$this->tempSignature}</span>
 <form action='https://auth.robokassa.ru/Merchant/Index.aspx' method=POST>
 <input type=hidden name=MerchantLogin value="{$paymentOptions['MrchLogin']}">
 <input type=hidden name=OutSum value="{$paymentOptions['OutSum']}">

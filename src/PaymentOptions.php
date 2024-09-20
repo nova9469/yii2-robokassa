@@ -126,6 +126,7 @@ class PaymentOptions extends BaseObject
      * @var array Дополнительные пользовательские параметры (Shp_)
      * Это такие параметры, которые ROBOKASSA никак не обрабатывает, но всегда возвращает магазину в ответных вызовах.
      */
+
     protected $_params = [];
 
     /**

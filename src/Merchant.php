@@ -90,12 +90,12 @@ class Merchant extends BaseObject
             $signature .= ":{$options->invId}";
         }
 
-        
         // Receipt должен идти СРАЗУ после InvId (требование Robokassa).
-        // Значение URL-кодируется ровно один раз — так же, как оно уходит в запросе.
+        // В ПОДПИСЬ Receipt кладётся СЫРЫМ JSON, без url-кодирования: Robokassa
+        // url-декодирует полученный Receipt перед проверкой подписи. В сам запрос
+        // (URL / POST-поле / iFrame) Receipt уходит url-кодированным один раз.
         if (($receipt = $options->getJsonReciept()) !== null) {
             // MerchantLogin:OutSum:InvId:Receipt:Пароль#1
-            $receipt = urlencode($receipt);
             $signature .= ":{$receipt}";
         }
         

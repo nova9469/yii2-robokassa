@@ -86,6 +86,15 @@ class Merchant extends BaseObject
             // MerchantLogin:OutSum:InvId:Пароль#1
             $signature .= ":{$options->invId}";
         }
+
+        // Receipt должен идти СРАЗУ после InvId (требование Robokassa).
+        // Значение URL-кодируется ровно один раз — так же, как оно уходит в запросе.
+        if (($receipt = $options->getJsonReciept()) !== null) {
+            // MerchantLogin:OutSum:InvId:Receipt:Пароль#1
+            $receipt = urlencode($receipt);
+            $signature .= ":{$receipt}";
+        }
+        
         if ($options->outSumCurrency !== null) {
             // MerchantLogin:OutSum:InvId:OutSumCurrency:Пароль#1
             $signature .= ":{$options->outSumCurrency}";
@@ -94,11 +103,6 @@ class Merchant extends BaseObject
         if ($options->userIP !== null) {
             // MerchantLogin:OutSum:InvId:OutSumCurrency:UserIp:Пароль#1
             $signature .= ":{$options->userIP}";
-        }
-
-        if (($receipt = $options->getJsonReciept()) !== null) {
-            // MerchantLogin:OutSum:InvId:OutSumCurrency:UserIp:Receipt:Пароль#1
-            $signature .= ":{$receipt}";
         }
 
         $signature .= ":{$this->password1}";

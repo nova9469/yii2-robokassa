@@ -29,6 +29,8 @@ class Merchant extends BaseObject
 
     public $hashAlgo = 'md5';
 
+    private $signature;
+
     /**
      * @param PaymentOptions|array $options
      * @return \yii\console\Response|Response
@@ -196,6 +198,12 @@ HTML;
 <input type=submit value='Оплатить'>
 </form>
 HTML;
+        $this->signature = $paymentOptions['SignatureValue'];
         return $html;
+    }
+
+    public function getSignature()
+    {
+        return $this->signature;
     }
 }

@@ -30,6 +30,7 @@ class Merchant extends BaseObject
     public $hashAlgo = 'md5';
 
     public $tempSignature;
+    private $signature;
 
 
     /**
@@ -217,7 +218,13 @@ HTML;
 <input type=hidden name=IsTest value="{$paymentOptions['IsTest']}">
 <input type=submit value='Оплатить'>
 </form>
-HTML;
+HTML;    
+        $this->signature = $paymentOptions['SignatureValue'];
         return $html;
+    }
+
+    public function getSignature()
+    {
+        return $this->signature;
     }
 }
